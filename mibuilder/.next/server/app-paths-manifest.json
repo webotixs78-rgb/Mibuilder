@@ -1,0 +1,15 @@
+{
+  "/workspaces/page": "app/workspaces/page.js",
+  "/workspaces/[id]/page": "app/workspaces/[id]/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/page": "app/page.js",
+  "/(marketing)/features/page": "app/(marketing)/features/page.js",
+  "/(marketing)/how-it-works/page": "app/(marketing)/how-it-works/page.js",
+  "/(marketing)/pricing/page": "app/(marketing)/pricing/page.js",
+  "/(marketing)/faq/page": "app/(marketing)/faq/page.js",
+  "/app/ai/page": "app/app/ai/page.js",
+  "/app/my-work/page": "app/app/my-work/page.js",
+  "/app/workspaces/page": "app/app/workspaces/page.js",
+  "/app/page": "app/app/page.js",
+  "/app/calendar/page": "app/app/calendar/page.js"
+}
