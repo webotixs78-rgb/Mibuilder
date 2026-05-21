@@ -33,7 +33,7 @@ export default function LoginPage() {
         user_creation_failed: "Unable to create your account. Please contact support.",
         server_error: "Something went wrong. Please try again.",
         oauth_not_configured: "Social login is not configured yet. Please use email login or contact support.",
-      }[errorParam] || "Login was unsuccessful. Please try again."
+      }[errorParam] || `Login failed: ${errorParam.replace(/_/g, ' ')}`
 
       setError(friendlyError)
     }
