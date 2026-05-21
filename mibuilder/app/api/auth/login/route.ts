@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import User from '@/models/User'
-import connectDB from '@/lib/database'
+import { getUserRowByEmail, updateUserLastLogin, verifyPassword } from '@/lib/supabaseService'
 import { generateToken, setTokenCookie } from '@/lib/jwt'
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB()
-    
     const body = await request.json()
     const { email, password } = body
 
-    // Validate required fields
     if (!email || !password) {
       return NextResponse.json(
         { error: 'Email and password are required' },
@@ -18,8 +14,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Find user by email
-    const user = await User.findOne({ email })
+    const user = await getUserRowByEmail(email)
     if (!user) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
@@ -27,15 +22,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if user is active
-    if (!user.isActive) {
+    if (!user.is_active) {
       return NextResponse.json(
         { error: 'Account is deactivated' },
         { status: 401 }
       )
     }
 
-    // Check if user has local provider (not OAuth)
     if (user.provider !== 'local') {
       return NextResponse.json(
         { error: `This account uses ${user.provider} login. Please use the ${user.provider} login button.` },
@@ -43,8 +36,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verify password
-    const isPasswordValid = await user.comparePassword(password)
+    const isPasswordValid = await verifyPassword(password, user.password)
     if (!isPasswordValid) {
       return NextResponse.json(
         { error: 'Invalid credentials' },
@@ -52,27 +44,36 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Update last login
-    await user.updateLastLogin()
+    await updateUserLastLogin(user.id)
 
-    // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: user.id,
       email: user.email,
       name: user.name,
       provider: user.provider
     })
 
-    // Set token in HTTP-only cookie
     const response = NextResponse.json({
       message: 'Login successful',
-      user: user.toJSON()
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        company: user.company ?? '',
+        role: user.role,
+        avatar: user.avatar ?? '',
+        isActive: user.is_active,
+        provider: user.provider,
+        providerId: user.provider_id ?? undefined,
+        createdAt: user.created_at,
+        updatedAt: user.updated_at,
+        lastLoginAt: user.last_login_at ?? undefined,
+      }
     }, { status: 200 })
 
     setTokenCookie(token, response)
 
     return response
-
   } catch (error: any) {
     console.error('Login error:', error)
     return NextResponse.json(

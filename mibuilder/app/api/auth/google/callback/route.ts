@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import User from '@/models/User'
-import connectDB from '@/lib/database'
+import { createUser, getUserByEmail, updateOAuthUser, updateUserLastLogin } from '@/lib/supabaseService'
 import { generateToken, setTokenCookie } from '@/lib/jwt'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
-    await connectDB()
-    
     const searchParams = request.nextUrl.searchParams
     const code = searchParams.get('code')
     const error = searchParams.get('error')
@@ -23,7 +22,6 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Exchange authorization code for access token
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: {
@@ -46,7 +44,6 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Get user info from Google
     const userResponse = await fetch(
       'https://www.googleapis.com/oauth2/v2/userinfo',
       {
@@ -64,50 +61,46 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Check if user already exists
-    let user = await User.findOne({ email: userData.email })
+    let user = await getUserByEmail(userData.email)
 
     if (user) {
-      // If user exists but doesn't have Google provider, update it
       if (user.provider !== 'google') {
-        user.provider = 'google'
-        user.providerId = userData.id
-        user.avatar = userData.picture || user.avatar
-        await user.save()
+        user = await updateOAuthUser(user.id, {
+          provider: 'google',
+          providerId: userData.id,
+          avatar: userData.picture || user.avatar,
+        })
       }
     } else {
-      // Create new user
-      user = new User({
+      user = await createUser({
         email: userData.email,
         name: userData.name,
         avatar: userData.picture,
         provider: 'google',
         providerId: userData.id,
-        role: 'owner'
+        role: 'owner',
       })
-      await user.save()
     }
 
-    // Update last login
-    await user.updateLastLogin()
+    if (!user) {
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_URL}/login?error=user_creation_failed`
+      )
+    }
 
-    // Generate JWT token
+    await updateUserLastLogin(user.id)
+
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: user.id,
       email: user.email,
       name: user.name,
-      provider: user.provider
+      provider: user.provider,
     })
 
-    // Set token in HTTP-only cookie and redirect
-    const response = NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/dashboard`
-    )
-
+    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/onboarding-new`)
     setTokenCookie(token, response)
 
     return response
-
   } catch (error: any) {
     console.error('Google OAuth error:', error)
     return NextResponse.redirect(

@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import User from '@/models/User'
-import connectDB from '@/lib/database'
+import { createUser, getUserByEmail } from '@/lib/supabaseService'
 import { generateToken, setTokenCookie } from '@/lib/jwt'
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB()
-    
     const body = await request.json()
     const { email, password, name, company } = body
 
-    // Validate required fields
     if (!email || !password || !name) {
       return NextResponse.json(
         { error: 'Email, password, and name are required' },
@@ -18,7 +14,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -27,7 +22,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate password
     if (password.length < 6) {
       return NextResponse.json(
         { error: 'Password must be at least 6 characters long' },
@@ -35,8 +29,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email })
+    const existingUser = await getUserByEmail(email)
     if (existingUser) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
@@ -44,8 +37,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create new user
-    const user = new User({
+    const user = await createUser({
       email,
       password,
       name,
@@ -54,26 +46,21 @@ export async function POST(request: NextRequest) {
       role: 'owner'
     })
 
-    await user.save()
-
-    // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: user.id,
       email: user.email,
       name: user.name,
       provider: user.provider
     })
 
-    // Set token in HTTP-only cookie
     const response = NextResponse.json({
       message: 'User created successfully',
-      user: user.toJSON()
+      user
     }, { status: 201 })
 
     setTokenCookie(token, response)
 
     return response
-
   } catch (error: any) {
     console.error('Registration error:', error)
     return NextResponse.json(

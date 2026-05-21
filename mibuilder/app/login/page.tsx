@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Mail, Lock, Eye, EyeOff, Facebook, Wrench, ArrowRight } from "lucide-react"
@@ -15,12 +15,16 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const [googleEnabled, setGoogleEnabled] = useState(false)
+  const [authConfigLoaded, setAuthConfigLoaded] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const { login, loginWithGoogle, loginWithFacebook, loading } = useAuth()
+  const { login, loginWithGoogle, loading } = useAuth()
 
   useEffect(() => {
-    const errorParam = searchParams.get("error")
+    if (typeof window === "undefined") return
+
+    const params = new URLSearchParams(window.location.search)
+    const errorParam = params.get("error")
     if (errorParam) {
       const friendlyError = {
         authorization_failed: "OAuth authorization was not completed.",
@@ -28,11 +32,30 @@ export default function LoginPage() {
         invalid_user_data: "Unable to retrieve account information from the provider.",
         user_creation_failed: "Unable to create your account. Please contact support.",
         server_error: "Something went wrong. Please try again.",
+        oauth_not_configured: "Social login is not configured yet. Please use email login or contact support.",
       }[errorParam] || "Login was unsuccessful. Please try again."
 
       setError(friendlyError)
     }
-  }, [searchParams])
+  }, [])
+
+  useEffect(() => {
+    const fetchAuthConfig = async () => {
+      try {
+        const response = await fetch('/api/auth/config')
+        if (response.ok) {
+          const data = await response.json()
+          setGoogleEnabled(!!data.googleConfigured)
+        }
+      } catch (fetchError) {
+        console.error('Failed to load auth config:', fetchError)
+      } finally {
+        setAuthConfigLoaded(true)
+      }
+    }
+
+    fetchAuthConfig()
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,10 +80,6 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     loginWithGoogle()
-  }
-
-  const handleFacebookLogin = () => {
-    loginWithFacebook()
   }
 
   return (
@@ -171,26 +190,32 @@ export default function LoginPage() {
             </div>
 
             {/* Social Login */}
-            <div className="grid grid-cols-2 gap-4">
-              <Button 
-                variant="outline" 
-                className="text-white border-2 border-white/30 hover:bg-white/20 hover:text-purple-900 backdrop-blur-xl transition-all duration-200"
+            <div className="grid grid-cols-1 gap-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full inline-flex items-center justify-center gap-3 border border-white/20 bg-white/95 text-slate-950 hover:bg-slate-100 transition-all duration-200"
                 onClick={handleGoogleLogin}
-                disabled={submitting || loading}
+                disabled={submitting || loading || !googleEnabled}
               >
-                <span className="mr-2">🔗</span>
-                Google
-              </Button>
-              <Button 
-                variant="outline" 
-                className="text-white border-2 border-white/30 hover:bg-white/20 hover:text-purple-900 backdrop-blur-xl transition-all duration-200"
-                onClick={handleFacebookLogin}
-                disabled={submitting || loading}
-              >
-                <Facebook className="w-4 h-4 mr-2" />
-                Facebook
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-sm bg-white">
+                  <svg viewBox="0 0 48 48" className="h-4 w-4" aria-hidden="true">
+                    <path fill="#EA4335" d="M24 9.5c3.9 0 7.3 1.4 10 3.8l7.4-7.4C35.5 2.2 30.1 0 24 0 14 0 5.2 5.7 1.9 14l8.6 6.7C12.5 14.5 17.7 9.5 24 9.5z" />
+                    <path fill="#4285F4" d="M46.5 24.5c0-1.4-.1-2.8-.4-4.1H24v8h12.7c-.6 3.4-2.2 6.2-4.8 8.2l7.5 5.8c4.4-4.1 6.9-10 6.9-17.9z" />
+                    <path fill="#FBBC05" d="M9.8 28.7c-.8-2.4-1.2-4.9-1.2-7.5s.4-5.1 1.2-7.5L1.9 7.3C.7 10.6 0 14.2 0 18c0 3.8.7 7.4 1.9 10.7l7.9-5.9z" />
+                    <path fill="#34A853" d="M24 48c6.1 0 11.4-2 15.2-5.4l-7.5-5.8c-2.1 1.5-4.8 2.4-7.7 2.4-6.3 0-11.5-4-13.4-9.4L1.9 32.7C5.2 41.3 14 48 24 48z" />
+                    <path fill="none" d="M0 0h48v48H0z" />
+                  </svg>
+                </span>
+                Continue with Google
               </Button>
             </div>
+
+            {authConfigLoaded && !googleEnabled && (
+              <div className="mt-4 text-sm text-purple-200">
+                Google login is currently unavailable until OAuth credentials are configured.
+              </div>
+            )}
 
             {/* Error Message */}
             {error && (

@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-development'
@@ -23,24 +24,26 @@ export const verifyToken = (token: string): JWTPayload => {
   }
 }
 
-export const setTokenCookie = (token: string, res: any) => {
+const getCookieOptions = () => {
   const isProduction = process.env.NODE_ENV === 'production'
-  
-  res.cookie('token', token, {
+
+  return {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax',
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    sameSite: isProduction ? 'none' as const : 'lax' as const,
+    maxAge: 7 * 24 * 60 * 60,
     path: '/',
-  })
+  }
 }
 
-export const clearTokenCookie = (res: any) => {
-  res.cookie('token', '', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+export const setTokenCookie = (token: string, res: NextResponse) => {
+  res.cookies.set('token', token, getCookieOptions())
+}
+
+export const clearTokenCookie = (res: NextResponse) => {
+  res.cookies.set('token', '', {
+    ...getCookieOptions(),
+    maxAge: 0,
     expires: new Date(0),
-    path: '/',
   })
 }
