@@ -47,91 +47,104 @@ export default function LandingPage() {
         </nav>
 
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          {/* Floating Elements */}
+        <section className="relative overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-purple-400/10 rounded-full blur-2xl animate-float" />
-            <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-pink-400/10 rounded-full blur-2xl animate-float-delayed" />
-            <div className="absolute bottom-1/4 left-1/3 w-40 h-40 bg-indigo-400/10 rounded-full blur-2xl animate-float-delayed-2" />
-            <div className="absolute top-1/2 right-1/3 w-36 h-36 bg-purple-400/10 rounded-full blur-2xl animate-float" />
+            <div className="absolute -top-10 left-1/2 w-72 h-72 bg-purple-500/15 rounded-full blur-3xl" />
+            <div className="absolute top-20 right-10 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 left-10 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl" />
           </div>
-          
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            {/* Badge */}
-            <div className="mb-8">
-              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-200 text-sm backdrop-blur-xl mb-8 hover:scale-105 transition-transform duration-300 shadow-lg shadow-purple-500/10">
-                <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
-                <span className="font-semibold">Revolutionary CRM Builder Platform</span>
-                <Rocket className="w-5 h-5 ml-2 animate-bounce" />
-              </div>
-            </div>
-            
-            {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight mb-7 animate-fade-in-up">
-              Build your CRM <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">your way</span>
-              <br />
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200">— without code</span>
-            </h1>
-            
-            {/* Description */}
-            <p className="text-lg sm:text-xl text-purple-200 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delayed">
-              Mibuilder lets businesses create custom CRM workflows, pipelines, dashboards, and automations without hiring developers. <span className="text-purple-100 font-semibold">Turn your unique processes into powerful business systems.</span>
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-fade-in-up-delayed-2">
-              <Link href="/register">
-                <Button size="lg" className="text-xl px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-2xl shadow-purple-500/30 transition-all duration-500 hover:shadow-purple-500/50 hover:scale-105 hover:shadow-3xl group relative overflow-hidden backdrop-blur-sm">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
-                  <span className="relative flex items-center">
-                    <Zap className="w-5 h-5 mr-2 animate-pulse" />
-                    Start Free
-                    <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </span>
-                </Button>
-              </Link>
-              <Button size="lg" variant="outline" className="text-xl px-12 py-6 text-white border-2 border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-white/10">
-                <span className="flex items-center">
-                  <Shield className="w-5 h-5 mr-2" />
-                  Book Demo
-                </span>
-              </Button>
-            </div>
-            
-            {/* Trust Indicators */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-purple-300 animate-fade-in-up-delayed-3">
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-sm font-medium">No credit card required</span>
-              </div>
-              <div className="hidden sm:block w-px h-4 bg-purple-400/30" />
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-sm font-medium">14-day free trial</span>
-              </div>
-              <div className="hidden sm:block w-px h-4 bg-purple-400/30" />
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-sm font-medium">Cancel anytime</span>
-              </div>
-            </div>
-            
-            {/* Social Proof */}
-            <div className="mt-16 animate-fade-in-up-delayed-4">
-              <div className="flex items-center justify-center space-x-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">10K+</div>
-                  <div className="text-purple-300 text-sm">Active Users</div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div className="grid gap-16 lg:grid-cols-[1.2fr_0.9fr] items-center">
+              <div className="space-y-8 text-center lg:text-left">
+                <div className="inline-flex items-center justify-center lg:justify-start gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-purple-100 shadow-lg shadow-purple-500/10 backdrop-blur-xl">
+                  <Sparkles className="w-5 h-5 text-purple-300" />
+                  <span className="font-semibold">Revolutionary CRM Builder Platform</span>
                 </div>
-                <div className="w-px h-8 bg-purple-400/30" />
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">500+</div>
-                  <div className="text-purple-300 text-sm">Companies</div>
+
+                <div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+                    Build your CRM <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-pink-300">your way</span>
+                  </h1>
+                  <p className="mt-4 text-lg lg:text-xl text-purple-200 max-w-3xl leading-relaxed">
+                    Launch beautiful CRM workflows, dashboards, automations, and team processes with a no-code platform built for modern businesses.
+                  </p>
                 </div>
-                <div className="w-px h-8 bg-purple-400/30" />
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">99.9%</div>
-                  <div className="text-purple-300 text-sm">Uptime</div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center lg:justify-start gap-4">
+                  <Link href="/register">
+                    <Button className="min-w-[180px] bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-2xl shadow-purple-500/25 transition-transform duration-300 hover:-translate-y-0.5">
+                      Start Free
+                    </Button>
+                  </Link>
+                  <Link href="/pricing">
+                    <Button variant="outline" className="min-w-[180px] text-white border border-white/20 hover:bg-white/10 backdrop-blur-xl">
+                      View Pricing
+                    </Button>
+                  </Link>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3 mt-10 text-left">
+                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-white shadow-xl shadow-purple-500/10">
+                    <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+                      <Zap className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-semibold">Fast setup</h3>
+                    <p className="mt-2 text-sm text-purple-300">Get started in minutes with prebuilt CRM templates.</p>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-white shadow-xl shadow-purple-500/10">
+                    <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">
+                      <Users className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-semibold">Team-ready</h3>
+                    <p className="mt-2 text-sm text-purple-300">Share workflows and manage permissions across teams.</p>
+                  </div>
+                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5 text-white shadow-xl shadow-purple-500/10">
+                    <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-blue-500 text-white">
+                      <BarChart3 className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-semibold">Real metrics</h3>
+                    <p className="mt-2 text-sm text-purple-300">Track performance with dashboards built for growth.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="rounded-[2rem] border border-white/10 bg-slate-950/70 p-8 shadow-2xl shadow-black/30 backdrop-blur-xl">
+                  <div className="flex items-center justify-between gap-4 mb-8">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.24em] text-purple-300">Live CRM preview</p>
+                      <h2 className="mt-3 text-3xl font-bold text-white">Workflow intelligence</h2>
+                    </div>
+                    <div className="rounded-2xl bg-white/10 px-4 py-2 text-sm text-purple-100">Beta</div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="rounded-3xl bg-white/5 p-5 border border-white/10">
+                      <div className="flex items-center justify-between text-sm text-purple-200">
+                        <span>Pipeline velocity</span>
+                        <span className="font-semibold text-white">+28%</span>
+                      </div>
+                      <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                        <div className="h-2 w-3/4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
+                      </div>
+                    </div>
+                    <div className="rounded-3xl bg-white/5 p-5 border border-white/10">
+                      <div className="flex items-center justify-between text-sm text-purple-200">
+                        <span>Active deals</span>
+                        <span className="font-semibold text-white">136</span>
+                      </div>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                        {['New','In progress','Won'].map((label) => (
+                          <div key={label} className="rounded-2xl bg-slate-900/70 px-3 py-2 text-center text-xs text-purple-100">{label}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="rounded-3xl bg-white/5 p-5 border border-white/10">
+                      <p className="text-sm text-purple-200">Automations triggered</p>
+                      <p className="mt-3 text-2xl font-bold text-white">24</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
