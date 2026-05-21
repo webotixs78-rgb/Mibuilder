@@ -40,19 +40,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuthStatus()
   }, [])
 
-  const checkAuthStatus = () => {
+  const checkAuthStatus = async () => {
     try {
-      // Check if user is authenticated via mock login
-      const mockUser = localStorage.getItem("mockUser")
-      if (mockUser) {
-        const user = JSON.parse(mockUser)
-        setUser(user)
-        console.log("User authenticated:", user.email)
+      setLoading(true)
+      const response = await fetch('/api/auth/me')
+
+      if (response.ok) {
+        const data = await response.json()
+        setUser(data.user)
       } else {
         setUser(null)
       }
     } catch (error) {
-      console.error("Error checking auth status:", error)
+      console.error('Error checking auth status:', error)
       setUser(null)
     } finally {
       setLoading(false)

@@ -2,12 +2,12 @@
 
 import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Wrench, ArrowRight, Eye, EyeOff, Mail, Lock, User, Check } from "lucide-react"
+import { Wrench, ArrowRight, Eye, EyeOff, Mail, Lock, User } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-// import { useAuth } from "@/contexts/AuthContext"
+import { useAuth } from "@/contexts/AuthContext"
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -21,8 +21,7 @@ export default function RegisterPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
-  // const { register, loginWithGoogle, loginWithFacebook, loading } = useAuth()
-  const loading = false
+  const { register, loginWithGoogle, loginWithFacebook, loading } = useAuth()
 
   const validateForm = () => {
     if (!formData.name.trim()) {
@@ -62,13 +61,12 @@ export default function RegisterPage() {
       return
     }
 
-    // Mock registration for testing
-    const result = { success: true }
-    
+    const result = await register(formData.email, formData.password, formData.name, formData.company)
+
     if (result.success) {
-      router.push("/onboarding")
+      router.push("/onboarding-new")
     } else {
-      setError("Registration failed")
+      setError(result.error || "Registration failed. Please try again.")
     }
   }
 
@@ -81,13 +79,11 @@ export default function RegisterPage() {
   }
 
   const handleGoogleLogin = () => {
-    // Mock Google login
-    alert("Google login (mock)")
+    loginWithGoogle()
   }
 
   const handleFacebookLogin = () => {
-    // Mock Facebook login
-    alert("Facebook login (mock)")
+    loginWithFacebook()
   }
 
   return (

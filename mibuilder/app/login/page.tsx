@@ -1,12 +1,12 @@
 "use client"
 
-import React, { useState } from "react"
-import { useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Mail, Lock, Eye, EyeOff, Chrome, Facebook, Wrench, ArrowRight } from "lucide-react"
+import { Mail, Lock, Eye, EyeOff, Facebook, Wrench, ArrowRight } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 
 export default function LoginPage() {
@@ -14,57 +14,53 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
+  const [submitting, setSubmitting] = useState(false)
   const router = useRouter()
-  const { refreshAuthStatus } = useAuth()
-  const loading = false
+  const searchParams = useSearchParams()
+  const { login, loginWithGoogle, loginWithFacebook, loading } = useAuth()
+
+  useEffect(() => {
+    const errorParam = searchParams.get("error")
+    if (errorParam) {
+      const friendlyError = {
+        authorization_failed: "OAuth authorization was not completed.",
+        token_exchange_failed: "Unable to verify your account. Please try again.",
+        invalid_user_data: "Unable to retrieve account information from the provider.",
+        user_creation_failed: "Unable to create your account. Please contact support.",
+        server_error: "Something went wrong. Please try again.",
+      }[errorParam] || "Login was unsuccessful. Please try again."
+
+      setError(friendlyError)
+    }
+  }, [searchParams])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
-    
-    // Mock login for testing
-    const result = { success: true }
-    
+    setSubmitting(true)
+
+    const result = await login(email, password)
+
     if (result.success) {
-      // Set mock user in localStorage for authentication
-      const mockUser = {
-        _id: "1",
-        email: email,
-        name: "Test User",
-        company: "Test Company",
-        role: "admin",
-        provider: "mock",
-        isActive: true,
-        createdAt: new Date().toISOString()
+      const hasCompletedOnboarding = localStorage.getItem("hasCompletedOnboarding")
+      if (hasCompletedOnboarding) {
+        router.push("/dashboard")
+      } else {
+        router.push("/onboarding-new")
       }
-      localStorage.setItem("mockUser", JSON.stringify(mockUser))
-      
-      // Refresh auth status to update the context
-      refreshAuthStatus()
-      
-      // Small delay to ensure auth state is updated
-      setTimeout(() => {
-        // Check if user has completed onboarding
-        const hasCompletedOnboarding = localStorage.getItem("hasCompletedOnboarding")
-        if (hasCompletedOnboarding) {
-          router.push("/dashboard")
-        } else {
-          router.push("/onboarding-new")
-        }
-      }, 100)
     } else {
-      setError("Login failed")
+      setError(result.error || "Login failed. Please check your credentials.")
     }
+
+    setSubmitting(false)
   }
 
   const handleGoogleLogin = () => {
-    // Mock Google login
-    alert("Google login (mock)")
+    loginWithGoogle()
   }
 
   const handleFacebookLogin = () => {
-    // Mock Facebook login
-    alert("Facebook login (mock)")
+    loginWithFacebook()
   }
 
   return (
@@ -180,7 +176,7 @@ export default function LoginPage() {
                 variant="outline" 
                 className="text-white border-2 border-white/30 hover:bg-white/20 hover:text-purple-900 backdrop-blur-xl transition-all duration-200"
                 onClick={handleGoogleLogin}
-                disabled={loading}
+                disabled={submitting || loading}
               >
                 <span className="mr-2">🔗</span>
                 Google
@@ -189,9 +185,9 @@ export default function LoginPage() {
                 variant="outline" 
                 className="text-white border-2 border-white/30 hover:bg-white/20 hover:text-purple-900 backdrop-blur-xl transition-all duration-200"
                 onClick={handleFacebookLogin}
-                disabled={loading}
+                disabled={submitting || loading}
               >
-                <span className="mr-2">�</span>
+                <Facebook className="w-4 h-4 mr-2" />
                 Facebook
               </Button>
             </div>

@@ -56,7 +56,7 @@ export default function LandingPage() {
             <div className="absolute top-1/2 right-1/3 w-36 h-36 bg-purple-400/10 rounded-full blur-2xl animate-float" />
           </div>
           
-          <div className="max-w-7xl mx-auto text-center relative z-10">
+          <div className="max-w-4xl mx-auto text-center relative z-10">
             {/* Badge */}
             <div className="mb-8">
               <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-200 text-sm backdrop-blur-xl mb-8 hover:scale-105 transition-transform duration-300 shadow-lg shadow-purple-500/10">
@@ -67,22 +67,15 @@ export default function LandingPage() {
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent leading-tight animate-fade-in-up">
-              Build your CRM<br />
-              <span className="relative">
-                your way
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-grow-width" />
-              </span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-tight mb-7 animate-fade-in-up">
+              Build your CRM <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">your way</span>
               <br />
-              <span className="text-4xl md:text-6xl lg:text-7xl bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
-                — without code
-              </span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200">— without code</span>
             </h1>
             
             {/* Description */}
-            <p className="text-xl md:text-2xl text-purple-200 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up-delayed">
-              Mibuilder lets businesses create custom CRM workflows, pipelines, dashboards, and automations 
-              without hiring developers. <span className="text-purple-100 font-semibold">Turn your unique processes into powerful business systems.</span>
+            <p className="text-lg sm:text-xl text-purple-200 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delayed">
+              Mibuilder lets businesses create custom CRM workflows, pipelines, dashboards, and automations without hiring developers. <span className="text-purple-100 font-semibold">Turn your unique processes into powerful business systems.</span>
             </p>
             
             {/* CTA Buttons */}
