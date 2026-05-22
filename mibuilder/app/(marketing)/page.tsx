@@ -22,12 +22,12 @@ export default function LandingPage() {
         <nav className="border-b border-white/10 backdrop-blur-xl bg-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
-              <div className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25">
                   <Wrench className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">Mibuilder</span>
-              </div>
+              </Link>
               <div className="hidden md:flex items-center space-x-8">
                 <Link href="/features" className="text-white/80 hover:text-white transition-colors">Features</Link>
                 <Link href="/how-it-works" className="text-white/80 hover:text-white transition-colors">How it Works</Link>
@@ -249,57 +249,44 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How it works</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              How it works
+            </h2>
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Get started in minutes, not months
             </p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                1
+            {[
+              { step: 1, title: "Sign Up", desc: "Create your free account and workspace" },
+              { step: 2, title: "Choose Template", desc: "Start with a template or from scratch" },
+              { step: 3, title: "Customize", desc: "Build modules, fields, and workflows" },
+              { step: 4, title: "Launch", desc: "Invite your team and start managing" }
+            ].map((item) => (
+              <div key={item.step} className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-white shadow-xl shadow-purple-500/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 relative group">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform duration-300">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-purple-200 text-sm leading-relaxed">{item.desc}</p>
               </div>
-              <h3 className="font-semibold mb-2">Sign Up</h3>
-              <p className="text-muted-foreground">Create your free account and workspace</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                2
-              </div>
-              <h3 className="font-semibold mb-2">Choose Template</h3>
-              <p className="text-muted-foreground">Start with a template or from scratch</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                3
-              </div>
-              <h3 className="font-semibold mb-2">Customize</h3>
-              <p className="text-muted-foreground">Build modules, fields, and workflows</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
-                4
-              </div>
-              <h3 className="font-semibold mb-2">Launch</h3>
-              <p className="text-muted-foreground">Invite your team and start managing</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Use Cases */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Built for every business</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              Built for every business
+            </h2>
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Perfect for startups, agencies, and growing companies
             </p>
           </div>
@@ -315,100 +302,121 @@ export default function LandingPage() {
               "Recruitment",
               "Project Management"
             ].map((useCase) => (
-              <Card key={useCase} className="text-center">
-                <CardContent className="pt-6">
-                  <h3 className="font-semibold">{useCase}</h3>
-                </CardContent>
-              </Card>
+              <div key={useCase} className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-xl shadow-purple-500/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                <h3 className="font-semibold">{useCase}</h3>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, transparent pricing</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              Simple, transparent pricing
+            </h2>
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Start free and scale as you grow
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
+            {/* Starter Plan */}
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/15 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 shadow-xl shadow-purple-500/5 text-white flex flex-col justify-between">
               <CardHeader className="text-center">
-                <CardTitle>Starter</CardTitle>
-                <div className="text-3xl font-bold">$0</div>
-                <CardDescription>Perfect for small teams</CardDescription>
+                <CardTitle className="text-white text-2xl font-bold">Starter</CardTitle>
+                <div className="text-5xl font-extrabold text-white my-4">$0</div>
+                <CardDescription className="text-purple-200">Perfect for small teams</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  "Up to 3 users",
-                  "2 custom modules",
-                  "Basic pipelines",
-                  "1 dashboard",
-                  "Email support"
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-                <Button className="w-full mt-6">Get Started</Button>
+              <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
+                <div className="space-y-3">
+                  {[
+                    "Up to 3 users",
+                    "2 custom modules",
+                    "Basic pipelines",
+                    "1 dashboard",
+                    "Email support"
+                  ].map((feature) => (
+                    <div key={feature} className="flex items-center text-sm">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                      <span className="text-purple-100">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link href="/register" className="block w-full mt-8">
+                  <Button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl py-6 transition-all duration-300">
+                    Get Started
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
 
-            <Card className="border-primary">
-              <CardHeader className="text-center">
-                <div className="bg-primary text-primary-foreground text-sm px-3 py-1 rounded-full inline-block mb-2">
+            {/* Professional Plan */}
+            <Card className="bg-gradient-to-b from-purple-600/30 to-indigo-950/50 backdrop-blur-2xl border border-purple-500/40 hover:from-purple-600/40 hover:to-indigo-950/60 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/30 shadow-xl shadow-purple-500/15 text-white flex flex-col justify-between relative scale-105 z-20">
+              <CardHeader className="text-center relative">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-purple-500/25 uppercase tracking-wider">
                   Most Popular
                 </div>
-                <CardTitle>Professional</CardTitle>
-                <div className="text-3xl font-bold">$49<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
-                <CardDescription>For growing businesses</CardDescription>
+                <CardTitle className="text-white text-2xl font-bold pt-4">Professional</CardTitle>
+                <div className="text-5xl font-extrabold text-white my-4">$49<span className="text-xl font-normal text-purple-200">/mo</span></div>
+                <CardDescription className="text-purple-200">For growing businesses</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  "Up to 20 users",
-                  "Unlimited modules",
-                  "Advanced pipelines",
-                  "10 dashboards",
-                  "Forms builder",
-                  "Automations",
-                  "Priority support"
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-                <Button className="w-full mt-6">Start Free Trial</Button>
+              <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
+                <div className="space-y-3">
+                  {[
+                    "Up to 20 users",
+                    "Unlimited modules",
+                    "Advanced pipelines",
+                    "10 dashboards",
+                    "Forms builder",
+                    "Automations",
+                    "Priority support"
+                  ].map((feature) => (
+                    <div key={feature} className="flex items-center text-sm">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                      <span className="text-purple-100">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link href="/register" className="block w-full mt-8">
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 rounded-2xl py-6 transition-all duration-300 hover:-translate-y-0.5">
+                    Start Free Trial
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
 
-            <Card>
+            {/* Enterprise Plan */}
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/15 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 shadow-xl shadow-purple-500/5 text-white flex flex-col justify-between">
               <CardHeader className="text-center">
-                <CardTitle>Enterprise</CardTitle>
-                <div className="text-3xl font-bold">Custom</div>
-                <CardDescription>For large organizations</CardDescription>
+                <CardTitle className="text-white text-2xl font-bold">Enterprise</CardTitle>
+                <div className="text-5xl font-extrabold text-white my-4">Custom</div>
+                <CardDescription className="text-purple-200">For large organizations</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  "Unlimited users",
-                  "Everything in Pro",
-                  "Advanced security",
-                  "Custom integrations",
-                  "Dedicated support",
-                  "SLA guarantee",
-                  "Custom training"
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                    <span className="text-sm">{feature}</span>
-                  </div>
-                ))}
-                <Button variant="outline" className="w-full mt-6">Contact Sales</Button>
+              <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
+                <div className="space-y-3">
+                  {[
+                    "Unlimited users",
+                    "Everything in Pro",
+                    "Advanced security",
+                    "Custom integrations",
+                    "Dedicated support",
+                    "SLA guarantee",
+                    "Custom training"
+                  ].map((feature) => (
+                    <div key={feature} className="flex items-center text-sm">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 mr-3 flex-shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                      <span className="text-purple-100">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link href="/contact" className="block w-full mt-8">
+                  <Button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl py-6 transition-all duration-300">
+                    Contact Sales
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
@@ -416,10 +424,12 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently asked questions</h2>
+      <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              Frequently asked questions
+            </h2>
           </div>
 
           <div className="space-y-6">
@@ -445,80 +455,88 @@ export default function LandingPage() {
                 a: "We offer comprehensive documentation, video tutorials, and personalized onboarding for Professional and Enterprise plans."
               }
             ].map((faq) => (
-              <Card key={faq.q}>
-                <CardContent className="pt-6">
-                  <h3 className="font-semibold mb-2">{faq.q}</h3>
-                  <p className="text-muted-foreground">{faq.a}</p>
-                </CardContent>
-              </Card>
+              <div key={faq.q} className="rounded-3xl border border-white/10 bg-white/5 p-8 text-white shadow-xl shadow-purple-500/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+                <h3 className="text-lg font-bold text-white mb-3">{faq.q}</h3>
+                <p className="text-purple-200 leading-relaxed">{faq.a}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to build your perfect CRM?</h2>
-          <p className="text-xl text-muted-foreground mb-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden -z-10">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        </div>
+        <div className="max-w-5xl mx-auto rounded-[3rem] border border-white/10 bg-white/5 p-12 md:p-16 text-center shadow-2xl shadow-purple-500/10 backdrop-blur-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-pink-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl" />
+          
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+            Ready to build your perfect CRM?
+          </h2>
+          <p className="text-xl text-purple-200 mb-10 max-w-2xl mx-auto leading-relaxed">
             Join thousands of businesses that have transformed their operations with Mibuilder
           </p>
-          <Button size="lg" className="text-lg px-8 py-3">
-            Start Your Free Trial
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-          <p className="text-sm text-muted-foreground mt-4">14-day free trial • No credit card required</p>
+          <Link href="/register" className="inline-block">
+            <Button size="lg" className="text-lg px-10 py-7 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-xl shadow-purple-500/25 transition-transform duration-300 hover:-translate-y-0.5 rounded-2xl font-bold">
+              Start Your Free Trial
+              <ArrowRight className="ml-2 w-5 h-5 inline-block" />
+            </Button>
+          </Link>
+          <p className="text-sm text-purple-300 mt-6 font-semibold">14-day free trial • No credit card required</p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="border-t border-white/10 py-16 px-4 sm:px-6 lg:px-8 bg-black/10 backdrop-blur-md relative z-10 text-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-12">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Wrench className="w-5 h-5 text-primary-foreground" />
+              <div className="flex items-center space-x-2 mb-6">
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25">
+                  <Wrench className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold">Mibuilder</span>
+                <span className="text-xl font-bold text-white">Mibuilder</span>
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-purple-200/80 leading-relaxed">
                 Build your CRM your way — without code.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">Features</a></li>
-                <li><a href="#" className="hover:text-foreground">Pricing</a></li>
-                <li><a href="#" className="hover:text-foreground">Templates</a></li>
-                <li><a href="#" className="hover:text-foreground">API</a></li>
+              <h4 className="font-semibold text-white mb-4">Product</h4>
+              <ul className="space-y-3 text-purple-200/70">
+                <li><Link href="/features" className="hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/templates" className="hover:text-white transition-colors">Templates</Link></li>
+                <li><Link href="/docs" className="hover:text-white transition-colors">API</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">About</a></li>
-                <li><a href="#" className="hover:text-foreground">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground">Careers</a></li>
-                <li><a href="#" className="hover:text-foreground">Contact</a></li>
+              <h4 className="font-semibold text-white mb-4">Company</h4>
+              <ul className="space-y-3 text-purple-200/70">
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/careers" className="hover:text-white transition-colors">Careers</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground">Documentation</a></li>
-                <li><a href="#" className="hover:text-foreground">Help Center</a></li>
-                <li><a href="#" className="hover:text-foreground">Community</a></li>
-                <li><a href="#" className="hover:text-foreground">Status</a></li>
+              <h4 className="font-semibold text-white mb-4">Support</h4>
+              <ul className="space-y-3 text-purple-200/70">
+                <li><Link href="/docs" className="hover:text-white transition-colors">Documentation</Link></li>
+                <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
+                <li><Link href="/community" className="hover:text-white transition-colors">Community</Link></li>
+                <li><Link href="/status" className="hover:text-white transition-colors">Status</Link></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
+          <div className="border-t border-white/10 mt-12 pt-8 text-center text-purple-300/60">
             <p>&copy; 2024 Mibuilder. All rights reserved.</p>
           </div>
         </div>
