@@ -49,7 +49,7 @@ export default function DocsPage() {
       icon: Code,
       description: "API documentation and third-party integrations",
       links: [
-        { title: "API Reference", href: "/docs/api-reference", time: "15 min" },
+        { title: "API Reference", href: "/docs/api", time: "15 min" },
         { title: "Webhooks", href: "/docs/webhooks", time: "8 min" },
         { title: "Third-party Apps", href: "/docs/third-party-apps", time: "12 min" },
         { title: "Custom Integrations", href: "/docs/custom-integrations", time: "18 min" }
@@ -80,7 +80,7 @@ export default function DocsPage() {
       title: "API Authentication Guide",
       category: "API & Integrations",
       time: "10 min",
-      href: "/docs/api-reference"
+      href: "/docs/api"
     }
   ]
 
@@ -89,25 +89,25 @@ export default function DocsPage() {
       title: "Getting Started with Mibuilder",
       duration: "12:45",
       thumbnail: "🎥",
-      href: "/docs/videos/getting-started"
+      href: "/docs/installation"
     },
     {
       title: "Building Your First CRM Module",
       duration: "18:30",
       thumbnail: "🎬",
-      href: "/docs/videos/first-module"
+      href: "/docs/creating-modules"
     },
     {
       title: "Advanced Workflows & Automations",
       duration: "25:15",
       thumbnail: "📹",
-      href: "/docs/videos/advanced-workflows"
+      href: "/docs/workflows"
     },
     {
       title: "API Integration Examples",
       duration: "15:20",
       thumbnail: "🎦",
-      href: "/docs/videos/api-integration"
+      href: "/docs/api"
     }
   ]
 
@@ -317,8 +317,8 @@ export default function DocsPage() {
                 <ul className="space-y-2 text-purple-200">
                   <li><Link href="/docs" className="hover:text-white transition-colors">Getting Started</Link></li>
                   <li><Link href="/docs/api" className="hover:text-white transition-colors">API Reference</Link></li>
-                  <li><Link href="/docs/tutorials" className="hover:text-white transition-colors">Tutorials</Link></li>
-                  <li><Link href="/docs/examples" className="hover:text-white transition-colors">Examples</Link></li>
+                  <li><Link href="/docs/creating-modules" className="hover:text-white transition-colors">Creating Modules</Link></li>
+                  <li><Link href="/docs/workflows" className="hover:text-white transition-colors">Workflows</Link></li>
                 </ul>
               </div>
               
