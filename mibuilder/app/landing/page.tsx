@@ -2,75 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Download, Star, Users, Zap, Wrench, Sparkles, Shield, Rocket, Target } from "lucide-react"
+import { ArrowRight, BarChart3, Wrench, Users, Zap, CheckCircle, Star, MessageSquare, Calendar, FileText, Settings, Lock, Sparkles, Shield, Rocket, Target } from "lucide-react"
 import Link from "next/link"
 
-export default function TemplatesPage() {
-  const templates = [
-    {
-      title: "Sales Pipeline",
-      description: "Complete sales workflow from lead to close with automated follow-ups",
-      category: "Sales",
-      icon: Target,
-      gradient: "from-purple-500 to-pink-500",
-      features: ["Lead tracking", "Deal stages", "Automated follow-ups", "Sales analytics"],
-      rating: 4.8,
-      downloads: "2.5K"
-    },
-    {
-      title: "Customer Support",
-      description: "Streamlined ticket management and customer communication system",
-      category: "Support",
-      icon: Users,
-      gradient: "from-blue-500 to-purple-500",
-      features: ["Ticket tracking", "Priority management", "SLA monitoring", "Customer portal"],
-      rating: 4.9,
-      downloads: "1.8K"
-    },
-    {
-      title: "Project Management",
-      description: "Track projects, tasks, and team collaboration in one place",
-      category: "Operations",
-      icon: Zap,
-      gradient: "from-green-500 to-blue-500",
-      features: ["Task management", "Team collaboration", "Progress tracking", "Resource planning"],
-      rating: 4.7,
-      downloads: "3.2K"
-    },
-    {
-      title: "Marketing Campaign",
-      description: "Manage campaigns, leads, and marketing ROI effectively",
-      category: "Marketing",
-      icon: Rocket,
-      gradient: "from-orange-500 to-red-500",
-      features: ["Campaign tracking", "Lead scoring", "ROI analytics", "A/B testing"],
-      rating: 4.6,
-      downloads: "1.5K"
-    },
-    {
-      title: "Inventory Management",
-      description: "Track inventory, orders, and supply chain operations",
-      category: "Operations",
-      icon: Shield,
-      gradient: "from-purple-500 to-indigo-500",
-      features: ["Stock tracking", "Order management", "Supplier relations", "Forecasting"],
-      rating: 4.8,
-      downloads: "2.1K"
-    },
-    {
-      title: "HR Management",
-      description: "Complete HR solution for recruitment, onboarding, and employee management",
-      category: "HR",
-      icon: Star,
-      gradient: "from-pink-500 to-purple-500",
-      features: ["Recruitment", "Onboarding", "Performance reviews", "Time tracking"],
-      rating: 4.9,
-      downloads: "1.9K"
-    }
-  ]
-
-  const categories = ["All", "Sales", "Support", "Operations", "Marketing", "HR"]
-
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative">
       {/* Radial Gradient Overlay */}
@@ -80,8 +15,8 @@ export default function TemplatesPage() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse" />
-        <div className="absolute top-40 right-20 w-96 h-96 bg-pink-500/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse animation-delay-2000" />
-        <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-indigo-500/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse animation-delay-4000" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-pink-500/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-20 left-1/2 w-80 h-80 bg-indigo-500/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
       </div>
       
       <div className="relative z-10">
@@ -115,105 +50,120 @@ export default function TemplatesPage() {
 
         {/* Hero Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-7xl mx-auto text-center">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-200 text-sm backdrop-blur-xl mb-6 shadow-lg shadow-purple-500/10">
               <Sparkles className="w-4 h-4 mr-2" />
-              Templates Gallery
+              Build your CRM your way - without code
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Start with proven
-              <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent"> CRM templates</span>
+              The Ultimate
+              <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent"> No-Code CRM</span>
+              Platform
             </h1>
-            <p className="text-xl text-purple-200 mb-8">
-              Choose from our library of professionally designed templates and customize them to fit your unique business needs.
+            <p className="text-xl text-purple-200 mb-8 max-w-3xl mx-auto">
+              Create custom workflows, modules, and automations without writing a single line of code. Perfect for businesses of all sizes.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/register">
                 <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 backdrop-blur-sm transition-all duration-300 hover:shadow-purple-500/40 hover:scale-[1.02]">
-                  Start Building
+                  Start Building Free
                 </Button>
               </Link>
-              <Link href="/how-it-works">
+              <Link href="/features">
                 <Button variant="outline" className="text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl">
-                  How It Works
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  View Features
                 </Button>
               </Link>
             </div>
           </div>
         </section>
 
-        {/* Categories */}
-        <section className="px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-wrap gap-4 justify-center">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={category === "All" ? "default" : "outline"}
-                  className={category === "All" 
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 backdrop-blur-sm"
-                    : "text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
-                  }
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Templates Grid */}
-        <section className="px-4 sm:px-6 lg:px-8 pb-20">
+        {/* Features Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Everything You Need to
+                <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent"> Build Amazing CRM</span>
+              </h2>
+              <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+                Powerful features that make CRM building simple and effective
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {templates.map((template, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10 group">
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`w-16 h-16 bg-gradient-to-br ${template.gradient} rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/25 group-hover:scale-110 transition-transform duration-300`}>
-                        <template.icon className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="flex items-center space-x-1">
-                          <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                          <span className="text-white text-sm">{template.rating}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Download className="w-4 h-4 text-purple-300" />
-                          <span className="text-purple-300 text-sm">{template.downloads}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-200 text-xs backdrop-blur-xl mb-4">
-                      {template.category}
-                    </div>
-                    <CardTitle className="text-xl text-white group-hover:text-purple-200 transition-colors mb-2">
-                      {template.title}
-                    </CardTitle>
-                    <CardDescription className="text-purple-200">
-                      {template.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        {template.features.slice(0, 3).map((feature, idx) => (
-                          <div key={idx} className="flex items-center space-x-2 text-purple-200 text-sm">
-                            <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <span className="text-purple-300 text-sm">+{template.features.length - 3} more features</span>
-                        <Button variant="ghost" className="text-purple-300 hover:text-white hover:bg-white/10 p-2 group-hover:bg-white/10">
-                          <ArrowRight className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/25">
+                    <Wrench className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">Visual Builder</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Drag-and-drop interface to build custom CRM modules
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/25">
+                    <Zap className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">Automations</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Set up workflows and automations without coding
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-500/25">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">Team Collaboration</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Work together with your team in real-time
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/25">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">Enterprise Security</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Bank-level security for your sensitive data
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/25">
+                    <Target className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">Analytics & Reports</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Get insights with powerful analytics and reporting
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+
+              <Card className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-pink-500/25">
+                    <Rocket className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl text-white">API & Integrations</CardTitle>
+                  <CardDescription className="text-purple-200">
+                    Connect with your favorite tools and services
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             </div>
           </div>
         </section>
@@ -224,21 +174,21 @@ export default function TemplatesPage() {
             <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl shadow-purple-500/20">
               <CardContent className="p-12 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Don't see what you need?
-                  <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent"> Build it yourself!</span>
+                  Ready to Transform Your
+                  <span className="bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent"> Business Operations?</span>
                 </h2>
                 <p className="text-xl text-purple-200 mb-8">
-                  With Mibuilder's no-code editor, you can create custom CRM solutions from scratch or modify any template to perfectly match your requirements.
+                  Join thousands of businesses already using Mibuilder to streamline their CRM processes.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                   <Link href="/register">
                     <Button size="lg" className="text-xl px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 backdrop-blur-sm transition-all duration-300 hover:shadow-purple-500/40 hover:scale-[1.02]">
-                      Start Building
+                      Start Free Trial
                     </Button>
                   </Link>
-                  <Link href="/features">
+                  <Link href="/demo">
                     <Button size="lg" variant="outline" className="text-xl px-12 py-6 text-white border-2 border-white/40 bg-white/10 hover:bg-white/20 hover:border-white/60 backdrop-blur-xl transition-all duration-300 hover:scale-105 shadow-lg shadow-white/20 hover:shadow-white/30">
-                      Explore Features
+                      Schedule Demo
                     </Button>
                   </Link>
                 </div>
@@ -300,19 +250,6 @@ export default function TemplatesPage() {
           </div>
         </footer>
       </div>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.3; }
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </div>
   )
 }

@@ -494,12 +494,12 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-12">
             <div>
-              <div className="flex items-center space-x-2 mb-6">
+              <Link href="/" className="flex items-center space-x-2 mb-6 hover:opacity-90 transition-opacity inline-flex">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25">
                   <Wrench className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">Mibuilder</span>
-              </div>
+              </Link>
               <p className="text-purple-200/80 leading-relaxed">
                 Build your CRM your way — without code.
               </p>
