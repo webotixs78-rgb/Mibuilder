@@ -267,7 +267,7 @@ export default function LandingPage() {
               { step: 3, title: "Customize", desc: "Build modules, fields, and workflows" },
               { step: 4, title: "Launch", desc: "Invite your team and start managing" }
             ].map((item) => (
-              <div key={item.step} className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-white shadow-xl shadow-purple-500/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 relative group">
+              <div key={item.step} className="rounded-3xl border border-white/20 bg-white/10 p-8 text-center text-white shadow-xl shadow-purple-500/10 backdrop-blur-2xl hover:bg-white/15 hover:border-white/20 transition-all duration-300 relative group">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-extrabold text-xl mx-auto mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform duration-300">
                   {item.step}
                 </div>
@@ -302,7 +302,7 @@ export default function LandingPage() {
               "Recruitment",
               "Project Management"
             ].map((useCase) => (
-              <div key={useCase} className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center text-white shadow-xl shadow-purple-500/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300">
+              <div key={useCase} className="rounded-3xl border border-white/20 bg-white/10 p-6 text-center text-white shadow-xl shadow-purple-500/10 backdrop-blur-2xl hover:bg-white/15 hover:border-white/20 transition-all duration-300">
                 <h3 className="font-semibold">{useCase}</h3>
               </div>
             ))}
