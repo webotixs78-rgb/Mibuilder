@@ -5,10 +5,7 @@ export async function GET(request: NextRequest) {
   const redirectUri = `${process.env.NEXT_PUBLIC_URL}/api/auth/facebook/callback`
 
   if (!appId) {
-    return NextResponse.json(
-      { error: 'Facebook OAuth is not configured' },
-      { status: 500 }
-    )
+    return NextResponse.redirect('/login?error=oauth_not_configured')
   }
 
   const scope = 'email,public_profile'

@@ -234,7 +234,7 @@ export default function ContactPage() {
                   <li><Link href="/features" className="hover:text-white transition-colors">Features</Link></li>
                   <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
                   <li><Link href="/templates" className="hover:text-white transition-colors">Templates</Link></li>
-                  <li><Link href="/api" className="hover:text-white transition-colors">API</Link></li>
+                  <li><Link href="/docs/api" className="hover:text-white transition-colors">API</Link></li>
                 </ul>
               </div>
               

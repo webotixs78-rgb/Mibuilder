@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from "next/server"
-import connectDB from "@/lib/database"
-import { RelationModel } from "@/models/Relation"
+import { NextRequest, NextResponse } from 'next/server'
+import { deleteRelation, getRelationById, updateRelation } from '@/lib/supabaseService'
 
 // GET single relation by ID
 export async function GET(
@@ -8,18 +7,16 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
-    const relation = await RelationModel.findById(params.id)
-    
+    const relation = await getRelationById(params.id)
+
     if (!relation) {
-      return NextResponse.json({ error: "Relation not found" }, { status: 404 })
+      return NextResponse.json({ error: 'Relation not found' }, { status: 404 })
     }
-    
+
     return NextResponse.json(relation)
   } catch (error) {
-    console.error("Error fetching relation:", error)
-    return NextResponse.json({ error: "Failed to fetch relation" }, { status: 500 })
+    console.error('Error fetching relation:', error)
+    return NextResponse.json({ error: 'Failed to fetch relation' }, { status: 500 })
   }
 }
 
@@ -29,25 +26,23 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
     const body = await request.json()
     const { name, settings, relationType } = body
-    
-    const updatedRelation = await RelationModel.update(params.id, {
+
+    const updatedRelation = await updateRelation(params.id, {
       name,
       settings,
-      relationType
+      relationType,
     })
-    
+
     if (!updatedRelation) {
-      return NextResponse.json({ error: "Relation not found" }, { status: 404 })
+      return NextResponse.json({ error: 'Relation not found' }, { status: 404 })
     }
-    
+
     return NextResponse.json(updatedRelation)
   } catch (error) {
-    console.error("Error updating relation:", error)
-    return NextResponse.json({ error: "Failed to update relation" }, { status: 500 })
+    console.error('Error updating relation:', error)
+    return NextResponse.json({ error: 'Failed to update relation' }, { status: 500 })
   }
 }
 
@@ -57,17 +52,11 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
-    const deleted = await RelationModel.delete(params.id)
-    
-    if (!deleted) {
-      return NextResponse.json({ error: "Relation not found" }, { status: 404 })
-    }
-    
+    const deleted = await deleteRelation(params.id)
+
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Error deleting relation:", error)
-    return NextResponse.json({ error: "Failed to delete relation" }, { status: 500 })
+    console.error('Error deleting relation:', error)
+    return NextResponse.json({ error: 'Failed to delete relation' }, { status: 500 })
   }
 }

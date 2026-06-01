@@ -22,7 +22,7 @@ export default function LandingPage() {
         <nav className="border-b border-white/10 backdrop-blur-xl bg-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
-              <Link href="/" className="flex items-center space-x-2 hover:opacity-90 transition-opacity">
+              <Link href="/" className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25">
                   <Wrench className="w-5 h-5 text-white" />
                 </div>
@@ -494,12 +494,12 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-12">
             <div>
-              <Link href="/" className="flex items-center space-x-2 mb-6 hover:opacity-90 transition-opacity inline-flex">
+              <div className="flex items-center space-x-2 mb-6">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/25">
                   <Wrench className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">Mibuilder</span>
-              </Link>
+              </div>
               <p className="text-purple-200/80 leading-relaxed">
                 Build your CRM your way — without code.
               </p>

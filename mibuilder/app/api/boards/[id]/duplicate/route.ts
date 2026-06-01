@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { BoardModel } from '@/models/Board'
-import { WorkspaceModel } from '@/models/Workspace'
-import connectDB from '@/lib/database'
+import { addBoardToWorkspace, duplicateBoard } from '@/lib/supabaseService'
 
 // POST duplicate board
 export async function POST(
@@ -9,20 +7,17 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
-    const board = await BoardModel.duplicate(params.id)
-    
+    const board = await duplicateBoard(params.id)
+
     if (!board) {
       return NextResponse.json(
         { error: 'Board not found or duplication failed' },
         { status: 404 }
       )
     }
-    
-    // Add duplicated board to workspace
-    await WorkspaceModel.addBoard(board.workspaceId, board._id.toString())
-    
+
+    await addBoardToWorkspace(board.workspaceId, board.id)
+
     return NextResponse.json({
       success: true,
       data: board

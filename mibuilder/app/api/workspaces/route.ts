@@ -1,19 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Workspace } from '@/models/Workspace'
-import { connectDB } from '@/lib/db'
 import jwt from 'jsonwebtoken'
+import { createWorkspace, getWorkspacesForUser } from '@/lib/supabaseService'
 
-// Middleware to verify JWT token
 async function verifyToken(request: NextRequest) {
   const token = request.headers.get('Authorization')?.replace('Bearer ', '')
-  
+
   if (!token) {
     return null
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any
-    return decoded
+    return jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any
   } catch (error) {
     return null
   }
@@ -21,8 +18,6 @@ async function verifyToken(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    await connectDB()
-    
     const user = await verifyToken(request)
     if (!user) {
       return NextResponse.json(
@@ -31,18 +26,11 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Get all workspaces where user is owner or member
-    const workspaces = await Workspace.find({
-      $or: [
-        { owner: user.userId },
-        { members: user.userId }
-      ]
-    }).populate('owner', 'name email')
+    const workspaces = await getWorkspacesForUser(user.userId)
 
     return NextResponse.json({
       workspaces
     }, { status: 200 })
-
   } catch (error) {
     console.error('Get workspaces error:', error)
     return NextResponse.json(
@@ -54,8 +42,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    await connectDB()
-    
     const user = await verifyToken(request)
     if (!user) {
       return NextResponse.json(
@@ -67,7 +53,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, description } = body
 
-    // Validate required fields
     if (!name) {
       return NextResponse.json(
         { error: 'Workspace name is required' },
@@ -75,23 +60,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create new workspace
-    const workspace = new Workspace({
+    const workspace = await createWorkspace({
       name,
       description: description || '',
       owner: user.userId,
-      members: [user.userId],
-      projects: [],
-      avatar: name.substring(0, 2).toUpperCase()
     })
-
-    await workspace.save()
 
     return NextResponse.json({
       message: 'Workspace created successfully',
       workspace
     }, { status: 201 })
-
   } catch (error) {
     console.error('Create workspace error:', error)
     return NextResponse.json(

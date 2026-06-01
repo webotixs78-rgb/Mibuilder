@@ -1,25 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { BoardModel, Board } from '@/models/Board'
-import { WorkspaceModel } from '@/models/Workspace'
-import connectDB from '@/lib/database'
+import { deleteBoard, getBoardById, removeBoardFromWorkspace, updateBoard } from '@/lib/supabaseService'
 
-// GET single board by ID
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
-    const board = await BoardModel.findById(params.id)
-    
+    const board = await getBoardById(params.id)
+
     if (!board) {
       return NextResponse.json(
         { error: 'Board not found' },
         { status: 404 }
       )
     }
-    
+
     return NextResponse.json({
       success: true,
       data: board
@@ -33,33 +28,30 @@ export async function GET(
   }
 }
 
-// PUT update board
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
     const body = await request.json()
     const { name, description, icon, color, settings } = body
-    
+
     const updateData: any = {}
     if (name !== undefined) updateData.name = name
     if (description !== undefined) updateData.description = description
     if (icon !== undefined) updateData.icon = icon
     if (color !== undefined) updateData.color = color
     if (settings !== undefined) updateData.settings = settings
-    
-    const board = await BoardModel.update(params.id, updateData)
-    
+
+    const board = await updateBoard(params.id, updateData)
+
     if (!board) {
       return NextResponse.json(
         { error: 'Board not found' },
         { status: 404 }
       )
     }
-    
+
     return NextResponse.json({
       success: true,
       data: board
@@ -73,29 +65,23 @@ export async function PUT(
   }
 }
 
-// DELETE board
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await connectDB()
-    
-    const board = await BoardModel.findById(params.id)
-    
+    const board = await getBoardById(params.id)
+
     if (!board) {
       return NextResponse.json(
         { error: 'Board not found' },
         { status: 404 }
       )
     }
-    
-    // Remove board from workspace
-    await WorkspaceModel.removeBoard(board.workspaceId, params.id)
-    
-    // Delete board
-    await BoardModel.delete(params.id)
-    
+
+    await removeBoardFromWorkspace(board.workspaceId, params.id)
+    await deleteBoard(params.id)
+
     return NextResponse.json({
       success: true,
       message: 'Board deleted successfully'

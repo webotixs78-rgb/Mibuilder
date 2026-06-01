@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from './jwt'
-import connectDB from './database'
-import User from '../models/User'
+import { getUserById } from './supabaseService'
 
 export async function authenticate(request: NextRequest) {
   try {
-    await connectDB()
-    
     const token = request.cookies.get('token')?.value
     
     if (!token) {
@@ -14,7 +11,7 @@ export async function authenticate(request: NextRequest) {
     }
     
     const decoded = verifyToken(token)
-    const user = await User.findById(decoded.userId).select('-password')
+    const user = await getUserById(decoded.userId)
     
     if (!user || !user.isActive) {
       return null
@@ -40,7 +37,7 @@ export async function requireAuth(request: NextRequest) {
 }
 
 export function withAuth(handler: any) {
-  return async (request: NextRequest, context: any) => {
+  return async (request: any, context: any) => {
     const user = await authenticate(request)
     
     if (!user) {
@@ -50,7 +47,6 @@ export function withAuth(handler: any) {
       )
     }
     
-    // Add user to request context
     request.user = user
     
     return handler(request, context)

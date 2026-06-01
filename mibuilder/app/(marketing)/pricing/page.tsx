@@ -122,7 +122,7 @@ export default function PricingPage() {
 
         {/* Pricing Cards */}
         <section className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto bg-white/5 border border-white/10 rounded-[2rem] p-6 backdrop-blur-2xl shadow-2xl shadow-purple-500/10">
             <div className="grid md:grid-cols-3 gap-8">
               {plans.map((plan, index) => (
                 <Card key={index} className={`bg-white/10 backdrop-blur-xl border ${plan.highlighted ? 'border-purple-400' : 'border-white/20'} hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10 relative`}>
@@ -174,7 +174,7 @@ export default function PricingPage() {
 
         {/* FAQ Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto bg-slate-950/20 border border-white/10 rounded-[2rem] p-8 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-white mb-4">Frequently asked questions</h2>
             </div>
@@ -213,7 +213,7 @@ export default function PricingPage() {
         {/* CTA Section */}
         <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-12 shadow-2xl shadow-purple-500/20">
+            <div className="bg-white/10 backdrop-blur-3xl border border-white/20 rounded-[2rem] p-12 shadow-2xl shadow-purple-500/20">
               <h2 className="text-3xl font-bold text-white mb-4">Ready to get started?</h2>
               <p className="text-xl text-purple-200 mb-8">
                 Join thousands of businesses using Mibuilder to build their perfect CRM
