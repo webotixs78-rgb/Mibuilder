@@ -323,13 +323,14 @@ export default function DashboardPage() {
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">Create Workspace</h3>
                   <p className="text-purple-200 text-sm mb-4">Start a new project</p>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
-                    onClick={() => window.location.href = '/workspaces/create'}
-                  >
-                    Create
-                  </Button>
+                  <Link href="/workspaces/create" className="block">
+                    <Button 
+                      variant="outline" 
+                      className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
+                    >
+                      Create
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
@@ -339,29 +340,15 @@ export default function DashboardPage() {
                     <Users className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">Invite Team</h3>
-                  <p className="text-purple-200 text-sm mb-4">Collaborate with others</p>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
-                    onClick={() => {
-                      const email = prompt("Enter team member email:")
-                      if (email) {
-                        // Save team member to localStorage
-                        const teamMembers = JSON.parse(localStorage.getItem("teamMembers") || "[]")
-                        teamMembers.push({
-                          id: Date.now().toString(),
-                          email: email,
-                          name: email.split("@")[0],
-                          role: "member",
-                          invitedAt: new Date().toISOString()
-                        })
-                        localStorage.setItem("teamMembers", JSON.stringify(teamMembers))
-                        alert(`Invitation sent to ${email}!`)
-                      }
-                    }}
-                  >
-                    Invite
-                  </Button>
+                  <p className="text-purple-200 text-sm mb-4">Collaborate with your workspace</p>
+                  <Link href="/dashboard/invite-team" className="block">
+                    <Button 
+                      variant="outline" 
+                      className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
+                    >
+                      Invite
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
@@ -372,37 +359,14 @@ export default function DashboardPage() {
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">View Analytics</h3>
                   <p className="text-purple-200 text-sm mb-4">Track your progress</p>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
-                    onClick={() => {
-                      // Create and show analytics data
-                      const workspaces = JSON.parse(localStorage.getItem("workspaces") || "[]")
-                      const teamMembers = JSON.parse(localStorage.getItem("teamMembers") || "[]")
-                      const analytics = {
-                        totalWorkspaces: workspaces.length,
-                        totalTeamMembers: teamMembers.length,
-                        totalModules: workspaces.reduce((sum: number, w: any) => sum + (w.modules || 0), 0),
-                        activeWorkspaces: workspaces.filter((w: any) => w.status === "active").length,
-                        createdAt: new Date().toISOString()
-                      }
-                      
-                      const analyticsMessage = `
-📊 Analytics Dashboard
-
-Total Workspaces: ${analytics.totalWorkspaces}
-Total Team Members: ${analytics.totalTeamMembers}
-Total Modules: ${analytics.totalModules}
-Active Workspaces: ${analytics.activeWorkspaces}
-
-Last Updated: ${new Date().toLocaleString()}
-                      `.trim()
-                      
-                      alert(analyticsMessage)
-                    }}
-                  >
-                    View
-                  </Button>
+                  <Link href="/dashboard/analytics" className="block">
+                    <Button 
+                      variant="outline" 
+                      className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
+                    >
+                      View
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
 
@@ -413,36 +377,14 @@ Last Updated: ${new Date().toLocaleString()}
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">Settings</h3>
                   <p className="text-purple-200 text-sm mb-4">Configure your account</p>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
-                    onClick={() => {
-                      // Create settings modal/options
-                      const settings = {
-                        theme: "dark",
-                        notifications: "enabled",
-                        language: "english",
-                        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-                      }
-                      
-                      const settingsMessage = `
-⚙️ Settings
-
-Theme: ${settings.theme}
-Notifications: ${settings.notifications}
-Language: ${settings.language}
-Timezone: ${settings.timezone}
-
-Account Type: Premium
-Storage Used: 2.3 GB / 10 GB
-Member Since: ${new Date().toLocaleDateString()}
-                      `.trim()
-                      
-                      alert(settingsMessage)
-                    }}
-                  >
-                    Configure
-                  </Button>
+                  <Link href="/dashboard/settings" className="block">
+                    <Button 
+                      variant="outline" 
+                      className="w-full text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
+                    >
+                      Configure
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>

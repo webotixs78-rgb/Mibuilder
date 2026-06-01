@@ -1,81 +1,15 @@
 "use client"
 
+import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Calendar, User, MessageSquare, Wrench, Sparkles, Zap, Shield, Rocket, TrendingUp } from "lucide-react"
+import { ArrowRight, Calendar, User, MessageSquare, Wrench, TrendingUp, Tag } from "lucide-react"
 import Link from "next/link"
+import { blogCategories, blogPosts } from "@/lib/blog"
 
 export default function BlogPage() {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "The Future of No-Code CRM Development",
-      excerpt: "Discover how no-code platforms are revolutionizing the way businesses build and customize their CRM systems.",
-      author: "Sarah Johnson",
-      date: "March 15, 2024",
-      readTime: "5 min read",
-      category: "Industry Trends",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
-      id: 2,
-      title: "10 Ways to Automate Your Sales Process",
-      excerpt: "Learn practical strategies to automate repetitive sales tasks and boost your team's productivity.",
-      author: "Mike Chen",
-      date: "March 10, 2024",
-      readTime: "7 min read",
-      category: "Sales Automation",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
-      gradient: "from-blue-500 to-purple-500"
-    },
-    {
-      id: 3,
-      title: "Building Custom Workflows Without Code",
-      excerpt: "Step-by-step guide to creating powerful business workflows using Mibuilder's visual editor.",
-      author: "Emily Davis",
-      date: "March 5, 2024",
-      readTime: "10 min read",
-      category: "Tutorial",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
-      gradient: "from-green-500 to-blue-500"
-    },
-    {
-      id: 4,
-      title: "Security Best Practices for CRM Systems",
-      excerpt: "Essential security measures to protect your customer data and maintain compliance.",
-      author: "Alex Thompson",
-      date: "February 28, 2024",
-      readTime: "8 min read",
-      category: "Security",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=400&fit=crop",
-      gradient: "from-orange-500 to-red-500"
-    },
-    {
-      id: 5,
-      title: "Scaling Your Business with Custom CRM",
-      excerpt: "How to design a CRM system that grows with your business and adapts to changing needs.",
-      author: "Lisa Anderson",
-      date: "February 20, 2024",
-      readTime: "6 min read",
-      category: "Business Growth",
-      image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=400&fit=crop",
-      gradient: "from-purple-500 to-indigo-500"
-    },
-    {
-      id: 6,
-      title: "Integration Guide: Connect Your Favorite Tools",
-      excerpt: "Complete guide to integrating Mibuilder with popular business tools and services.",
-      author: "David Kim",
-      date: "February 15, 2024",
-      readTime: "12 min read",
-      category: "Integrations",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
-      gradient: "from-pink-500 to-purple-500"
-    }
-  ]
-
-  const categories = ["All", "Industry Trends", "Sales Automation", "Tutorial", "Security", "Business Growth", "Integrations"]
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const filteredPosts = selectedCategory === "All" ? blogPosts : blogPosts.filter((post) => post.category === selectedCategory)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 relative">
@@ -140,11 +74,12 @@ export default function BlogPage() {
         <section className="px-4 sm:px-6 lg:px-8 mb-12">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-wrap gap-4 justify-center">
-              {categories.map((category) => (
+              {blogCategories.map((category) => (
                 <Button
                   key={category}
-                  variant={category === "All" ? "default" : "outline"}
-                  className={category === "All" 
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(category)}
+                  className={selectedCategory === category 
                     ? "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 backdrop-blur-sm"
                     : "text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-xl"
                   }
@@ -160,12 +95,14 @@ export default function BlogPage() {
         <section className="px-4 sm:px-6 lg:px-8 pb-20">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post) => (
-                <Card key={post.id} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10 group">
-                  <div className="relative">
-                    <div className={`h-48 bg-gradient-to-br ${post.gradient} opacity-20`} />
+              {filteredPosts.map((post) => (
+                <Card key={post.id} className="bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:scale-[1.02] shadow-xl shadow-purple-500/10 group overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full text-purple-200 text-xs backdrop-blur-xl">
+                      <span className="inline-flex items-center px-3 py-1 bg-black/40 border border-white/20 rounded-full text-white text-xs backdrop-blur-xl">
+                        <Tag className="w-3 h-3 mr-1" />
                         {post.category}
                       </span>
                     </div>

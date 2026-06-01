@@ -3,23 +3,38 @@
 import React, { useState, useEffect, Suspense } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { ProtectedRoute } from "@/components/ProtectedRoute"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { WorkspaceBuilder, Workspace } from "@/components/workspace/WorkspaceBuilder"
+
+interface WorkspaceMember {
+  id: string
+  email: string
+  name: string
+  role: string
+  invitedAt: string
+  workspaceId: string
+}
 
 export default function WorkspaceDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const workspaceId = Array.isArray(params.id) ? params.id[0] : params.id
   const [workspace, setWorkspace] = useState<Workspace | null>(null)
+  const [workspaceMembers, setWorkspaceMembers] = useState<WorkspaceMember[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     loadWorkspace()
-  }, [params.id])
+    if (workspaceId) {
+      loadWorkspaceMembers(workspaceId)
+    }
+  }, [workspaceId])
 
   const loadWorkspace = () => {
     try {
       // Load workspace from localStorage
       const workspaces = JSON.parse(localStorage.getItem("workspaces") || "[]")
-      const foundWorkspace = workspaces.find((w: any) => w.id === params.id)
+      const foundWorkspace = workspaces.find((w: any) => w.id === workspaceId)
       
       if (foundWorkspace) {
         // Load workspace builder data
@@ -27,7 +42,7 @@ export default function WorkspaceDetailPage() {
         setWorkspace(workspaceData)
       } else {
         // Create default workspace if not found
-        const defaultWorkspace: Workspace = createDefaultWorkspace(params.id as string)
+        const defaultWorkspace: Workspace = createDefaultWorkspace(workspaceId ?? "")
         setWorkspace(defaultWorkspace)
       }
     } catch (error) {
@@ -37,6 +52,16 @@ export default function WorkspaceDetailPage() {
       setWorkspace(defaultWorkspace)
     }
     setLoading(false)
+  }
+
+  const loadWorkspaceMembers = (workspaceId: string) => {
+    try {
+      const savedMembers = JSON.parse(localStorage.getItem(`workspace_members_${workspaceId}`) || "[]")
+      setWorkspaceMembers(savedMembers)
+    } catch (error) {
+      console.error("Error loading workspace members:", error)
+      setWorkspaceMembers([])
+    }
   }
 
   const loadWorkspaceData = (workspaceId: string): Workspace => {
@@ -355,20 +380,51 @@ export default function WorkspaceDetailPage() {
 
   return (
     <ProtectedRoute>
-      <Suspense
-        fallback={
-          <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 flex items-center justify-center">
-            <div className="text-center text-white">Loading builder…</div>
-          </div>
-        }
-      >
-        <WorkspaceBuilder
-          workspace={workspace}
-          onWorkspaceChange={handleWorkspaceChange}
-          onSave={handleSave}
-          onBack={handleBack}
-        />
-      </Suspense>
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900">
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <Card className="mb-8 bg-white/10 border border-white/10 shadow-2xl shadow-purple-500/10">
+            <CardHeader>
+              <CardTitle>Workspace Team Access</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-purple-200">These are the members currently invited to this workspace.</p>
+              {workspaceMembers.length === 0 ? (
+                <p className="text-purple-300">No invited members yet. Use the Invite Team panel from the dashboard to assign access.</p>
+              ) : (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {workspaceMembers.map((member) => (
+                    <div key={member.id} className="rounded-3xl border border-white/10 bg-white/5 p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-white">{member.name}</p>
+                          <p className="text-sm text-purple-200">{member.email}</p>
+                        </div>
+                        <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs text-purple-100">{member.role}</span>
+                      </div>
+                      <p className="mt-3 text-sm text-purple-300">Invited {new Date(member.invitedAt).toLocaleDateString()}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 flex items-center justify-center">
+              <div className="text-center text-white">Loading builder…</div>
+            </div>
+          }
+        >
+          <WorkspaceBuilder
+            workspace={workspace}
+            onWorkspaceChange={handleWorkspaceChange}
+            onSave={handleSave}
+            onBack={handleBack}
+          />
+        </Suspense>
+      </div>
     </ProtectedRoute>
   )
 }
